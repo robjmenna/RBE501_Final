@@ -3,7 +3,7 @@ syms q1 q2 q3 q4 q5 q6 pi;
 syms I4 I5 I6
 syms dq1 dq2 dq3 dq4 dq5 dq6
 syms ddq1 ddq2 ddq3 ddq4 ddq5 ddq6
-syms m1 m2 m3 m4 m5 m6
+syms m1 m2 m3 m4 m5 m6 g
 syms a1 a2 a3 d1 d4 d6
 
 q = [q1 q2 q3 q4 q5 q6];
@@ -94,12 +94,12 @@ for i = K
     Kt = Kt+i;
 end
 
-P(1) = T10(3,4)*m1;
-P(2) = T20(3,4)*m2;
-P(3) = T30(3,4)*m3;
-P(4) = T40(3,4)*m4;
-P(5) = T50(3,4)*m5;
-P(6) = Tf0(3,4)*m6;
+P(1) = T10(3,4)*m1*g;
+P(2) = T20(3,4)*m2*g;
+P(3) = T30(3,4)*m3*g;
+P(4) = T40(3,4)*m4*g;
+P(5) = T50(3,4)*m5*g;
+P(6) = Tf0(3,4)*m6*g;
 
 Pt = 0;
 for i = P
