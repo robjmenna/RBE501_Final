@@ -222,9 +222,9 @@ G = simplify([G11; G21; G31; G41; G51; G61]);
 C = simplify([C11; C21; C31; C41; C51; C61]);
 
 % Print results.
-M
-C
-G
+pretty(M);
+pretty(C);
+pretty(G);
 
 function A = get_A(L, q, dq, ddq, i)
 syms th1(t) th2(t) th3(t) th4(t) th5(t) th6(t)
