@@ -240,24 +240,10 @@ A = subs(dAt, [th1 th2 th3 th4 th5 th6 diff(th1(t), t), diff(th2(t), t), ...
     diff(th5(t),t,t), diff(th6(t),t,t)], [q dq ddq]);
 end
 
-function Kt = trans_kinetic(dth, Jv, m)
-Kt = 0.5*dth*Jv.'*m*Jv*dth.';
-end
-
-function Kw = rot_kinetic(dth, Jw, R, I)
-Kw = 0.5*dth*Jw.'*R*I*R.'*Jw*dth.';
-end
-
 % Return a transformation matrix based on the DH parameters.
 function T = DH(alpha, a, d, theta)
 T = [cos(theta) -sin(theta)*cos(alpha) sin(theta)*sin(alpha)  a*cos(theta);
      sin(theta) cos(theta)*cos(alpha)  -cos(theta)*sin(alpha) a*sin(theta);
      0          sin(alpha)             cos(alpha)             d;
      0          0                      0                      1];
-end
-
-% Calculate an element of the angular component of the Jacobian.
-function z = get_z(T)
-    R = T(1:3,1:3);
-    z = R * [0;0;1];
 end

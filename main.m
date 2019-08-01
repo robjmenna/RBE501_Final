@@ -11,7 +11,7 @@ path_4 = zeros(3,50);
 path_5 = quintic_trajectory(q0(5),0,0,qf(5),0,0,t);
 path_6 = zeros(3,50);
 
-Tau = generate_torque(path_1, path_2, path_3, path_4, path_5, path_6);
+Tau = generate_torque(path_1, path_2, path_3, path_4, path_5, path_6, 0);
 figure;
 tau_plot(t, Tau);
 
