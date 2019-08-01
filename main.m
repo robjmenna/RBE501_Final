@@ -11,32 +11,16 @@ path_4 = zeros(3,50);
 path_5 = quintic_trajectory(q0(5),0,0,qf(5),0,0,t);
 path_6 = zeros(3,50);
 
-Tau = generate_torque(path_1, path_2, path_3, path_4, path_5, path_6, 0.5, 0.5);
+Tau = generate_torque(path_1, path_2, path_3, path_4, path_5, path_6);
 figure;
 tau_plot(t, Tau);
-% sgtitle('Torque Controller Output for the 2-Link Robot');
-% ax1 = subplot(3,2,1);
-% plot(ax1,t, Tau(1,:));
-% title('Joint #1 Torque Output');
-% xlabel('Time (s)');
-% ylabel('Torque (N*m)');
-% ax2 = subplot(3,1,2);
-% plot(ax2,t, Tau(2,:));
-% title('Joint #2 Torque Output');
-% xlabel('Time (s)');
-% ylabel('Torque (N*m)');
-% ax2 = subplot(3,1,3);
-% plot(ax2,t, Tau(3,:));
-% title('Joint #3 Torque Output');
-% xlabel('Time (s)');
-% ylabel('Torque (N*m)');
 
 function tau_subplot(m, n, index, x, y)
 ax = subplot(m,n,index);
 plot(ax,x,y);
 xlabel('Time (s)');
 ylabel('Torque (N*m)');
-title('Joint #' + index + ' Torque Output');
+title(['Joint #' num2str(index) ' Torque Output']);
 end
 
 function tau_plot(t,Tau)
