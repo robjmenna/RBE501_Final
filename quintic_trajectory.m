@@ -1,3 +1,19 @@
+%%
+% This function takes the initial and final position constraints and
+% generates a 3 x n matrix of the trajectory.
+% Inputs:
+% q0: initial position
+% v0: initial velocity
+% a0: initial acceleration
+% qf: final position
+% vf: final velocity
+% af: final acceleration
+% t: time domain of the trajectory
+%
+% Outputs:
+% d: the trajectory. Row 1 is the position, row 2 is the velocity, row 3 is
+% the acceleration.
+
 function d = quintic_trajectory(q0, v0, a0, qf, vf, af, t)
 t0 = t(1);
 tf = t(size(t,2));

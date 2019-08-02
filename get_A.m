@@ -1,3 +1,6 @@
+%%
+% get the first term of the Lagrangian for a given joint in the robot.
+
 function A = get_A(L, q, dq, ddq, joint_num)
 syms th1(t) th2(t) th3(t) th4(t) th5(t) th6(t);
 

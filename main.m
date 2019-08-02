@@ -1,4 +1,7 @@
 %%
+% RBE501 Final Project
+%
+
 clear
 syms q1 q2 q3 q4 q5 q6
 syms dq1 dq2 dq3 dq4 dq5 dq6
@@ -8,9 +11,10 @@ q = [q1 q2 q3 q4 q5 q6];
 dq = [dq1 dq2 dq3 dq4 dq5 dq6];
 ddq = [ddq1 ddq2 ddq3 ddq4 ddq5 ddq6];
 
-q0 = [0 0 0 0 0 0];
-qf = [0 -pi/6 -pi/6 0 -pi/6 0];
+q0 = [0 0 0 0 0 0]; % Initial robot position
+qf = [0 -pi/6 -pi/6 0 -pi/6 0]; % Final robot position
 
+% Generate time values and the trajectory for each joint.
 t = linspace(0,3,50);
 path_1 = zeros(3,50);
 path_2 = quintic_trajectory(q0(2),0,0,qf(2),0,0,t);
@@ -19,8 +23,13 @@ path_4 = zeros(3,50);
 path_5 = quintic_trajectory(q0(5),0,0,qf(5),0,0,t);
 path_6 = zeros(3,50);
 
-t_model = generate_dynamic_model(q,dq,ddq,0);
+% Create a model based on the robot specs from the datasheet
+t_model = generate_dynamic_model(q,dq,ddq,3);
+
+% Genertae torque for each point in the trajectory.
 Tau = generate_torque1(path_1, path_2, path_3, path_4, path_5, path_6,q,dq,ddq, t_model);
+
+% Plot the torque required at each joint.
 figure;
 tau_plot(t, Tau);
 

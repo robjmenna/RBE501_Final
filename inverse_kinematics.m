@@ -1,3 +1,6 @@
+%%
+% Get the joint positions of the robot given a coordinate in the world frame.
+
 function theta_matrix = inverse_kinematics(xc, yc, zc)
 %RBE-501
 %Term Project

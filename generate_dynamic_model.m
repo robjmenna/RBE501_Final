@@ -1,20 +1,27 @@
+%%
+% Generate the dynamic model of the robot given a specific payload at the
+% end effector.
+
 function Tau = generate_dynamic_model(q, dq, ddq, payload)
 
 syms a1 a2 a3 d1 d2 d3
 fprintf('Starting torque controller\n');
 
+% The mass of each link is calculated as a percentage of the total mass in
+% the datasheet relative to the volume of each link.
 mt = 53;
 m1 = mt*0.2869;
 m2 = mt*0.3763;
 m4 = mt*(0.1713 + 0.1363);
 m6 = mt*0.0283;
 
-I1 = 0.47;
-I2 = 0.47;
-I3 = 0.15;
+I4 = 0.47;
+I5 = 0.47;
+I6 = 0.15;
 mp = payload;
 g = 9.8;
 
+% Find the forward kinematics.
 d = [d1 0 0 d2 0 d3];
 theta = [q(1) q(2)+pi/2 q(3) q(4) q(5) q(6)];
 a = [a1 a2 a3 0 0 0];
@@ -33,6 +40,7 @@ T04 = T03*T34;
 T05 = T04*T45;
 T0f = T05*T5f;
 
+% Get the jacobian
 J_l1 = jacobian(T01(1:3,4), q(1));
 J_l2 = jacobian(T02(1:3,4),[q(1) q(2)]);
 J_l4t = jacobian(T04(1:3,4),[q(1) q(2) q(3) q(4)]);
@@ -46,15 +54,16 @@ v_m2 = J_l2 * [dq(1) ; dq(2)];
 v_m4 = J_l4t * [dq(1) ; dq(2) ; dq(3); dq(4)];
 v_m6 = J_l6t * [dq(1) ; dq(2) ; dq(3); dq(4); dq(5); dq(6)];
 
+% Find the kinetic and potential energy
 fprintf('Finding K and P\n');
 K1 = simplify(subs(0.5 * m1 * (v_m1.' * v_m1), [a1 d1], [a1/2 d1/2]));
 K2 = subs(0.5 * m2 * (v_m2.' * v_m2), a2, a2/2);
 K4 = subs(0.5 * m4 * (v_m4.' * v_m4), [a3 d2], [a3/2 d2/2]);
 K6 = subs(0.5 * m6 * (v_m6.' * v_m6), d3, d3/2);
 K_p = 0.5 * mp * (v_m6.' * v_m6);
-%K4r = get_rotational_kinetic_energy([dq(1) dq(2) dq(3) dq(4)],J_l4w,T04(1:3,1:3),I4);
-%K5r = get_rotational_kinetic_energy([dq(1) dq(2) dq(3) dq(4) dq(5)],J_l5w,T05(1:3,1:3),I5);
-%K6r = get_rotational_kinetic_energy([dq(1) dq(2) dq(3) dq(4) dq(5) dq(6)],J_l6w,T0f(1:3,1:3),I6);
+K4r = get_rotational_kinetic_energy([dq(1) dq(2) dq(3) dq(4)],J_l4w,T04(1:3,1:3),I4);
+K5r = get_rotational_kinetic_energy([dq(1) dq(2) dq(3) dq(4) dq(5)],J_l5w,T05(1:3,1:3),I5);
+K6r = get_rotational_kinetic_energy([dq(1) dq(2) dq(3) dq(4) dq(5) dq(6)],J_l6w,T0f(1:3,1:3),I6);
 
 P1 = subs(m1 * g * T01(3,4), [a1 d1], [a1/2 d1/2]);
 P2 = subs(m2 * g * T02(3,4), a2, a2/2);
@@ -63,9 +72,10 @@ P6 = subs(m6 * g * T0f(3,4), d3, d3/2);
 Pp = mp * g * T0f(3,4);
 
 fprintf('Finding L\n');
-K = K1 + K2 + K4 + K6 + K_p; %+ K4r + K5r + K6r;
+K = K1 + K2 + K4 + K6 + K_p + K4r + K5r + K6r;
 P = P1 + P2 + P4 + P6 + Pp;
 
+% Calculate the Lagrangian
 L = K - P;
 A1 = get_A(L, q, dq, ddq, 1);
 A2 = get_A(L, q, dq, ddq, 2);
