@@ -1,5 +1,13 @@
 %%
 clear
+syms q1 q2 q3 q4 q5 q6
+syms dq1 dq2 dq3 dq4 dq5 dq6
+syms ddq1 ddq2 ddq3 ddq4 ddq5 ddq6
+
+q = [q1 q2 q3 q4 q5 q6];
+dq = [dq1 dq2 dq3 dq4 dq5 dq6];
+ddq = [ddq1 ddq2 ddq3 ddq4 ddq5 ddq6];
+
 q0 = [0 0 0 0 0 0];
 qf = [0 -pi/6 -pi/6 0 -pi/6 0];
 
@@ -11,7 +19,8 @@ path_4 = zeros(3,50);
 path_5 = quintic_trajectory(q0(5),0,0,qf(5),0,0,t);
 path_6 = zeros(3,50);
 
-Tau = generate_torque(path_1, path_2, path_3, path_4, path_5, path_6, 0);
+t_model = generate_dynamic_model(q,dq,ddq,0);
+Tau = generate_torque1(path_1, path_2, path_3, path_4, path_5, path_6,q,dq,ddq, t_model);
 figure;
 tau_plot(t, Tau);
 
@@ -24,7 +33,7 @@ title(['Joint #' num2str(index) ' Torque Output']);
 end
 
 function tau_plot(t,Tau)
-sgtitle('Torque Controller Output for the 2-Link Robot');
+sgtitle('Required Torque input for the Fanuc Robot');
 max = size(Tau,1);
 for p=1:max
     tau_subplot(3,2,p,t,Tau(p,:));

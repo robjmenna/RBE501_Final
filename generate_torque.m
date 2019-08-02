@@ -50,9 +50,9 @@ K2 = subs(0.5 * m2 * (v_m2.' * v_m2), a2, a2/2);
 K4 = subs(0.5 * m4 * (v_m4.' * v_m4), [a3 d2], [a3/2 d2/2]);
 K6 = subs(0.5 * m6 * (v_m6.' * v_m6), d3, d3/2);
 K_p = 0.5 * mp * (v_m6.' * v_m6);
-K4r = get_rotational_kinetic_energy([dq1 dq2 dq3 dq4],J_l4w,T04(1:3,1:3),I4);
-K5r = get_rotational_kinetic_energy([dq1 dq2 dq3 dq4 dq5],J_l5w,T05(1:3,1:3),I5);
-K6r = get_rotational_kinetic_energy([dq1 dq2 dq3 dq4 dq5 dq6],J_l6w,T0f(1:3,1:3),I6);
+%K4r = get_rotational_kinetic_energy([dq1 dq2 dq3 dq4],J_l4w,T04(1:3,1:3),I4);
+%K5r = get_rotational_kinetic_energy([dq1 dq2 dq3 dq4 dq5],J_l5w,T05(1:3,1:3),I5);
+%K6r = get_rotational_kinetic_energy([dq1 dq2 dq3 dq4 dq5 dq6],J_l6w,T0f(1:3,1:3),I6);
 
 P1 = subs(m1 * g * T01(3,4), [a1 d1], [a1/2 d1/2]);
 P2 = subs(m2 * g * T02(3,4), a2, a2/2);
@@ -61,7 +61,7 @@ P6 = subs(m6 * g * T0f(3,4), d3, d3/2);
 Pp = mp * g * T0f(3,4);
 
 fprintf('Finding L\n');
-K = K1 + K2 + K4 + K6 + K_p + K4r + K5r + K6r;
+K = K1 + K2 + K4 + K6 + K_p; %+ K4r + K5r + K6r;
 P = P1 + P2 + P4 + P6 + Pp;
 
 L = K - P;
