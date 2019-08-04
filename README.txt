@@ -1,7 +1,7 @@
 # RBE501_Final
 RBE501 Final Project
 
-Authors: Robert Menna, Michael DeMalia, Gregory K
+Authors: Robert Menna, Michael DeMalia, Gregory Kashmanian
 
 This matlab project lays out the dynamic model for the Fanuc articulated arm robot. The entry point of the application is main.m. 
 This script creates six different trajectories based on the initial and final joint positions defined in q0 and qf. From there, 
