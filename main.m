@@ -27,7 +27,7 @@ path_6 = zeros(3,50);
 t_model = generate_dynamic_model(q,dq,ddq,3);
 
 % Genertae torque for each point in the trajectory.
-Tau = generate_torque1(path_1, path_2, path_3, path_4, path_5, path_6,q,dq,ddq, t_model);
+Tau = generate_torque(path_1, path_2, path_3, path_4, path_5, path_6,q,dq,ddq, t_model);
 
 % Plot the torque required at each joint.
 figure;
