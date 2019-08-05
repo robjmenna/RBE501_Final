@@ -1,8 +1,10 @@
 function T0f = forward_kinematics(q)
 
+q_ = deg2rad(q);
+
 % Find the forward kinematics.
 d = [330 0 0 335 0 80];
-theta = [q(1) q(2)+pi/2 q(3) q(4) q(5) q(6)];
+theta = [q_(1) q_(2)+pi/2 q_(3) q_(4) q_(5) q_(6)];
 a = [50 330 35 0 0 0];
 alpha = [pi/2 0 pi/2 -pi/2 pi/2 0];
 
@@ -18,5 +20,4 @@ T03 = T02 * T23;
 T04 = T03 * T34;
 T05 = T04 * T45;
 T0f = T05 * T5f;
-
 end

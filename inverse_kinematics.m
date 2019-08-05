@@ -1,17 +1,14 @@
-%%
-% Get the joint positions of the robot given a coordinate in the world frame.
-
-function theta_matrix = inverse_kinematics(xc, yc, zc)
+%function theta_matrix = inverse_kinematics(xc, yc, zc)
 %RBE-501
 %Term Project
 %Mike DeMalia, Gregory Kashmanian and Robert Menna
 %Inverse Kinematics
-
+clc 
+clear all
 %Defining known variables that form the T60 matrix
-%yc=0;
-%xc=465;
-%zc=695;
-
+yc=0;
+xc=465;
+zc=695;
 r11=1;
 r21=0;
 r31=0;
@@ -54,13 +51,14 @@ P_3 = EE_start - P_1;
 R_norm = norm([P_3(1), P_3(2), P_3(3)]);
 
 %Calculation of theta 2
+
 P = atan2(P_3(3), norm([P_3(1),P_3(2)]));
 G = (acos((R_norm^2 + L2^2 - L3^2) / (2*R_norm*L2)));
 th2 = G + P - pi/2;
 
 %Calculation of theta 3 - Note specific parameters for CR7
 Alpha = (acos((L2^2 + L3^2 - R_norm^2) / (2*L2*L3)));
-Th3_O = atan2(35, 335)
+Th3_O = atan2(35, 335);
 th3 = Alpha - pi/2 - Th3_O;
 
 %Defining parameters needed for theta 4, theta 5 and theta 6
@@ -79,5 +77,4 @@ s4=sin(th4);
 th6=(pi/2)-(atan2(s1*r12-c1*r22, -s1*r11+c1*r21));
 
 %Overall theta calculation
-theta_matrix=(180/pi)*[th1;th2;th3;th4;th5;th6];
-end
+theta_matrix=(180/pi)*[th1;th2;th3;th4;th5;th6]

@@ -36,9 +36,9 @@ T5f = DH(alpha(6), a(6), d(6), theta(6));
 
 T02 = T01 * T12;
 T03 = T02 * T23;
-T04 = T03*T34;
-T05 = T04*T45;
-T0f = T05*T5f;
+T04 = T03 * T34;
+T05 = T04 * T45;
+T0f = T05 * T5f;
 
 % Get the jacobian
 J_l1 = jacobian(T01(1:3,4), q(1));

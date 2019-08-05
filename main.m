@@ -16,12 +16,12 @@ qf = [0 -pi/6 -pi/6 0 -pi/6 0]; % Final robot position
 
 % Generate time values and the trajectory for each joint.
 t = linspace(0,3,50);
-path_1 = zeros(3,50);
+path_1 = quintic_trajectory(q0(1),0,0,qf(1),0,0,t);
 path_2 = quintic_trajectory(q0(2),0,0,qf(2),0,0,t);
 path_3 = quintic_trajectory(q0(3),0,0,qf(3),0,0,t);
-path_4 = zeros(3,50);
+path_4 = quintic_trajectory(q0(4),0,0,qf(4),0,0,t);
 path_5 = quintic_trajectory(q0(5),0,0,qf(5),0,0,t);
-path_6 = zeros(3,50);
+path_6 = quintic_trajectory(q0(6),0,0,qf(6),0,0,t);
 
 % Create a model based on the robot specs from the datasheet
 t_model = generate_dynamic_model(q,dq,ddq,3);
